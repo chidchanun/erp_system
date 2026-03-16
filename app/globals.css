@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "react-quill-new/dist/quill.snow.css";
 
 :root {
   --background: #ffffff;
@@ -17,10 +18,116 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+
+  .ql-picker-label {
+    color: white;
+  }
+
+  .ql-snow .ql-stroke {
+    stroke: white;
+  }
+
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== Custom Scrollbar ===== */
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  /* Firefox */
+  scrollbar-color: #a1a1aa transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #a1a1aa;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #71717a;
+}
+
+/* Dark mode */
+.dark .custom-scrollbar {
+  scrollbar-color: #52525b transparent;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #52525b;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #71717a;
+}
+
+.drag-highlight {
+  cursor: grabbing;
+}
+
+.drag-highlight::after {
+  content: "";
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.4);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* ===== Dark Mode Toolbar Icon ===== */
+
+.dark .ql-toolbar .ql-stroke {
+  stroke: #ffffff;
+}
+
+.dark .ql-toolbar .ql-fill {
+  fill: #ffffff;
+}
+
+/* dropdown arrow */
+.dark .ql-toolbar .ql-picker-label svg {
+  stroke: #ffffff;
+}
+
+/* dropdown text เช่น Normal */
+.dark .ql-toolbar .ql-picker {
+  color: #ffffff;
+}
+
+/* active button */
+.dark .ql-toolbar button.ql-active .ql-stroke {
+  stroke: #ffffff;
+}
+
+.dark .ql-toolbar button.ql-active .ql-fill {
+  fill: #ffffff;
+}
+
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
