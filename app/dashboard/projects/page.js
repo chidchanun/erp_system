@@ -22,7 +22,6 @@ export default function MyProjectPage() {
                 })
 
                 const data = await res.json()
-                console.log(data)
                 setProjects(data.RequestMyProject || [])
 
             } catch (err) {

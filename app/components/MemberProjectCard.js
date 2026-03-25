@@ -38,7 +38,7 @@ export default function MemberProject({memberProject, project, canEdit}) {
                     canEdit && (
                         <div className="">
                             <Link
-                                href={`/dashboard/projects/member/edit/${project.id}`}
+                                href={`/dashboard/projects/${project.id}/member/edit/`}
                                 className="text-sm px-4 py-1 rounded 
                                         bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
                             >

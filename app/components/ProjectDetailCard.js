@@ -18,7 +18,7 @@ export default function ProjectDetailCard({ project, canEdit }) {
                     {canEdit && (
                         <div>
                             <Link
-                                href={`/dashboard/projects/edit/${project.id}`}
+                                href={`/dashboard/projects/${project.id}/edit/`}
                                 className="text-sm px-4 py-1.5 rounded 
                              bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
                             >
@@ -50,7 +50,7 @@ export default function ProjectDetailCard({ project, canEdit }) {
 
                     <div
                         className="text-gray-700 dark:text-gray-300 leading-relaxed
-                            wrap-break-word
+                            wrap-anywhere
                             [&_ul]:list-disc [&_ul]:ml-6
                             [&_ol]:list-decimal [&_ol]:ml-6"
                         dangerouslySetInnerHTML={{

@@ -3,7 +3,7 @@ import Link from "next/link"
 export default function Breadcrumb({ items }) {
 
     return (
-        <div className="flex items-center text-sm text-gray-500 gap-1 mb-4 max-md:text-xs flex-wrap">
+        <div className="flex items-center text-sm text-gray-500 gap-1  max-md:text-xs flex-wrap">
 
             {items.map((item, index) => (
 

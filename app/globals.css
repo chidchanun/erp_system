@@ -119,6 +119,22 @@ body {
   fill: #ffffff;
 }
 
+.gantt .bar {
+  fill: #3b82f6;
+}
+
+.gantt .bar-progress {
+  fill: #22c55e;
+}
+
+.gantt .grid-header {
+  fill: #f8fafc;
+}
+
+.gantt .today-highlight {
+  fill: #fef3c7;
+}
+
 
 @keyframes scaleIn {
   0% {

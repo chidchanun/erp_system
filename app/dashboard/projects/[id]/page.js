@@ -18,7 +18,7 @@ export default function ProjectDetailPage() {
     const [memberProject, setMemberProject] = useState()
     const [loading, setLoading] = useState(true)
     const user = useUser()
-    
+
     useEffect(() => {
 
         async function loadData() {
@@ -71,25 +71,20 @@ export default function ProjectDetailPage() {
         user.userId === project.owner_id ||
         memberProject?.some(m => m.role === "co owner" && m.user_id === user.userId)
 
-    const startDate = new Date(project.start_date).toLocaleDateString("th-TH")
-    const dueDate = new Date(project.due_date).toLocaleDateString("th-TH")
 
     return (
 
-        <div className="max-w-5xl p-3 max-md:p-1.5 ">
+        <div className="max-w-6xl p-3">
 
-            {/* Header */}
-            <Breadcrumb
-                items={[
-                    { label: "แดชบอร์ด", href: "/dashboard" },
-                    { label: "โปรเจ็ค", href: "/dashboard/projects" },
-                    { label: project.project_name }
-                ]}
-            />
-            <ProjectDetailCard project={project} canEdit={canEdit}/>
+            {/* Content */}
+            <div className="">
 
-            {/* Members */}
-            <MemberProject memberProject={memberProject} project={project} canEdit={canEdit}/>
+                <ProjectDetailCard project={project} canEdit={canEdit} />
+
+                <MemberProject memberProject={memberProject} project={project} canEdit={canEdit} />
+
+            </div>
+
         </div>
 
     )
