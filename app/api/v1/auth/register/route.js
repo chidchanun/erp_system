@@ -5,9 +5,9 @@ import bcrypt from "bcrypt"
 export async function POST(request) {
     try {
         const body = await request.json()
-        const { prefix, first_name, last_name, first_name_en, last_name_en, password, password_comfirmed, phone, sex_id, department_id, role_id } = body
+        const { prefix, first_name, last_name, first_name_en, last_name_en, password, password_comfirmed, phone, sex_id, department_id, role_id, subrole_id } = body
 
-        if (!prefix || !first_name || !last_name || !password || !password_comfirmed || !phone || !sex_id || !department_id || !role_id || !first_name_en || !last_name_en) {
+        if (!prefix || !first_name || !last_name || !password || !password_comfirmed || !phone || !sex_id || !department_id || !role_id || !first_name_en || !last_name_en || !subrole_id) {
             return NextResponse.json({ message: 'โปรดกรอกข้อมูลให้เรียบร้อย', status: 400 })
         }
 
@@ -57,12 +57,13 @@ export async function POST(request) {
         const userId = `${twoDigitYear}${departmentCode}${paddedRunning}`
 
         await db.query(
-            "INSERT INTO users (id, prefix, first_name, last_name, first_name_en, last_name_en, email, password_hash, phone, department_id, sex_id, role_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [userId, prefix, first_name, last_name, first_name_en, last_name_en, email, hashedPassword, phone, department_id, sex_id, role_id]
+            "INSERT INTO users (id, prefix, first_name, last_name, first_name_en, last_name_en, email, password_hash, phone, department_id, sex_id, role_id, subrole_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [userId, prefix, first_name, last_name, first_name_en, last_name_en, email, hashedPassword, phone, department_id, sex_id, role_id, subrole_id]
         )
 
         return NextResponse.json({ message: 'บันทึกข้อมูลสำเร็จ' }, { status: 200 })
-    } catch  {
+    } catch (e)  {
+        console.log(e)
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
     }
 }

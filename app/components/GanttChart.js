@@ -1,9 +1,21 @@
 "use client"
 
-import { useMemo } from "react"
+import { useMemo, useState, useEffect } from "react"
 
 export default function GanttChart({ tasks, view = "day" }) {
+    const [screen, setScreen] = useState("desktop")
 
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 640) setScreen("mobile")
+            else if (window.innerWidth < 1024) setScreen("tablet")
+            else setScreen("desktop")
+        }
+
+        handleResize()
+        window.addEventListener("resize", handleResize)
+        return () => window.removeEventListener("resize", handleResize)
+    }, [])
     const DAY = 1000 * 60 * 60 * 24
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,10 +66,17 @@ export default function GanttChart({ tasks, view = "day" }) {
     }
 
     const totalUnits = units.length
-    const columnWidth = 40
-    const taskWidth = 260
-    const timelineWidth = taskWidth + totalUnits * columnWidth
+    const columnWidth =
+        screen === "mobile" ? 28 :
+            screen === "tablet" ? 34 :
+                40
 
+    const taskWidth =
+        screen === "mobile" ? 0 :
+            screen === "tablet" ? 200 :
+                260
+    const timelineWidth = taskWidth + totalUnits * columnWidth
+    const startColumn = screen === "mobile" ? 1 : 2
     const today = new Date()
 
     const getOffset = (date) => {
@@ -105,6 +124,7 @@ export default function GanttChart({ tasks, view = "day" }) {
         return "bg-gray-400"
     }
 
+
     const isWeekend = (date) => {
         const day = date.getDay()
         return day === 0 || day === 6
@@ -125,7 +145,7 @@ export default function GanttChart({ tasks, view = "day" }) {
                     <div
                         className="absolute top-0 bottom-0 w-0.5 bg-red-500 z-20"
                         style={{
-                            left: taskWidth + todayOffset * columnWidth
+                            left: (screen === "mobile" ? 0 : taskWidth) + todayOffset * columnWidth
                         }}
                     />
                 )}
@@ -209,9 +229,11 @@ export default function GanttChart({ tasks, view = "day" }) {
                     }}
                 >
 
-                    <div className="sticky left-0 bg-white dark:bg-gray-900 z-10 border-r p-2 font-semibold dark:border-gray-700">
-                        Task
-                    </div>
+                    {screen !== "mobile" && (
+                        <div className="sticky left-0 bg-white dark:bg-gray-900 z-10 border-r p-2 font-semibold dark:border-gray-700">
+                            Task
+                        </div>
+                    )}
 
                     {units.map((d, i) => (
 
@@ -245,18 +267,25 @@ export default function GanttChart({ tasks, view = "day" }) {
                         >
 
                             {/* TASK NAME */}
-                            <div className="sticky left-0 bg-white dark:bg-gray-900 border-r p-2 text-sm z-10 dark:border-gray-700">
-                                {task.title}
-                            </div>
+                            {screen !== "mobile" && (
+                                <div className="sticky left-0 bg-white dark:bg-gray-900 border-r p-2 text-sm z-10 dark:border-gray-700">
+                                    {task.title}
+                                </div>
+                            )}
 
                             {/* BAR */}
                             <div
-                                className={`h-7 rounded text-white text-xs flex items-center px-2
-                                ${getColor(task.status)}`}
+                                className={`h-7 rounded text-white text-[11px] flex items-center px-2 overflow-hidden ${getColor(task.status)}`}
                                 style={{
-                                    gridColumn: `${offset + 2} / span ${duration}`
+                                    gridColumn: `${offset + startColumn} / span ${duration}`
                                 }}
-                            />
+                            >
+                                {screen === "mobile" && (
+                                    <span className="truncate w-full">
+                                        {task.title}
+                                    </span>
+                                )}
+                            </div>
 
                         </div>
 

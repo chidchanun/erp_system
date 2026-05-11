@@ -30,7 +30,11 @@ export default function SideBar() {
     const [mobileOpen, setMobileOpen] = useState(false)
     const [manualProjectOpen, setManualProjectOpen] = useState(false)
     const [manualTaskOpen, setManualTaskOpen] = useState(false)
+    const [manualHROpen, setManualHROpen] = useState(false)
     const [myProject, setMyProject] = useState([])
+
+    const autoHROpen = pathname.startsWith(`/dashboard/hr`)
+    const openHRMenu = autoHROpen || manualHROpen
 
     const autoProjectOpen = pathname.startsWith(`/dashboard/projects`)
     const openProjectMenu = autoProjectOpen || manualProjectOpen
@@ -162,7 +166,11 @@ export default function SideBar() {
 
 
 
+
                     {/* Projects */}
+                    {!collapsed && <div className="flex pl-4 my-3 items-center text-[12px] text-[#969696]">
+                        ระบบโปรเจ็กและงาน
+                    </div>}
 
                     <div>
                         <button
@@ -302,6 +310,64 @@ export default function SideBar() {
 
                             </div>
                         )}
+                    </div>
+
+
+                    {/* HR */}
+                    {!collapsed && <div className="flex pl-4 my-3 items-center text-[12px] text-[#969696]">
+                        ระบบงานฝ่ายทรัพยากรบุคคล HR
+                    </div>}
+
+                    <div>
+
+                        <button
+                            onClick={() => setManualHROpen(!manualHROpen)}
+                            className="flex items-center justify-between w-full max-md:m-1.5 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                        >
+                            <div className="flex items-center gap-3">
+                                <Users size={18} />
+                                {!collapsed && "ฝ่ายทรัพยากรบุคคล"}
+                            </div>
+
+                            {!collapsed && (
+                                <ChevronDown
+                                    size={16}
+                                    className={`transition-transform ${manualHROpen ? "rotate-180" : ""}`}
+                                />
+                            )}
+                        </button>
+
+                        {!collapsed && manualHROpen && (
+                            <div className="ml-8 mt-2 space-y-1 max-md:ml-4">
+
+                                <Link
+                                    href="/dashboard/hr"
+                                    className={`
+                                        block px-3 py-2 rounded-lg text-sm transition max-md:mx-1 max-md:my-0.5
+                                        ${isActive("/dashboard/hr")
+                                            ? "bg-blue-500 text-white"
+                                            : "hover:bg-gray-100 dark:hover:bg-gray-700"}
+                                    `}
+                                    onClick={() => setMobileOpen(false)}
+                                >
+                                    ระบบฝ่ายทรัพยากรบุคคล
+                                </Link>
+                                <Link
+                                    href="/dashboard/hr/register"
+                                    className={`
+                                        block px-3 py-2 rounded-lg text-sm transition max-md:mx-1 max-md:my-0.5
+                                        ${isActive("/dashboard/hr/register")
+                                            ? "bg-blue-500 text-white"
+                                            : "hover:bg-gray-100 dark:hover:bg-gray-700"}
+                                    `}
+                                    onClick={() => setMobileOpen(false)}
+                                >
+                                    ระบบเพิ่มพนักงาน
+                                </Link>
+
+                            </div>
+                        )}
+
                     </div>
 
                     {/* Users */}

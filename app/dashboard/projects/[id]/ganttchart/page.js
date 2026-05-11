@@ -103,27 +103,36 @@ export default function GanttChartPage() {
     })
 
     return (
-        <div className="flex flex-col w-full">
+        <div className="w-full min-h-screen bg-white dark:bg-gray-900">
 
-            <h1 className="text-2xl font-bold mb-6">
-                Project Gantt Chart
-            </h1>
+            <div className="w-full max-w-full px-3 sm:px-5 md:px-8">
 
-            <GanttFilters
-                filters={filters}
-                setFilters={setFilters}
-                project={project}
-            />
+                <h1 className="text-lg sm:text-xl md:text-2xl font-bold mb-4">
+                    Project Gantt Chart
+                </h1>
 
-            <GanttChart
-                tasks={filteredTasks}
-                view={filters.view}
-            />
+                <GanttFilters
+                    filters={filters}
+                    setFilters={setFilters}
+                    project={project}
+                />
 
-            <AddTaskForm
-                project={project}
-                AllTask={tasks}
-            />
+                <div className="mt-4 w-full">
+                    <GanttChart
+                        tasks={filteredTasks}
+                        view={filters.view}
+                    />
+                </div>
+
+                <div className="mt-6">
+                    <AddTaskForm
+                        project={project}
+                        AllTask={tasks}
+                        setTasks={setTasks}
+                    />
+                </div>
+
+            </div>
 
         </div>
     )
