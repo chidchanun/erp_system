@@ -7,14 +7,18 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-      - name: Deploy to Ubuntu Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            /home/ChidchanunServer/erp_system/deploy.sh
+      - name: Go to project
+        run: |
+          cd /home/ChidchanunServer/erp_system
+          git pull origin main
+          npm install
+          npm run build
+
+      - name: Restart App
+        run: |
+          screen -S mainWeb -X stuff "^C"
+          sleep 3
+          screen -S mainWeb -X stuff "npm start\n"
