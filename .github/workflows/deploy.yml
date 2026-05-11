@@ -1,0 +1,24 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Go to project
+        run: |
+          cd /home/ChidchanunServer/erp_system
+          git pull origin main
+          npm install
+          npm run build
+
+      - name: Restart App
+        run: |
+          screen -S mainWeb -X stuff "^C"
+          sleep 3
+          screen -S mainWeb -X stuff "npm start\n"
